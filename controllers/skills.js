@@ -3,10 +3,13 @@ import * as skillDb from '../data/skill-db.js'
 
 
 function index(req, res) {
+  console.log(req);
+  req.time
   skillDb.find({}, function(error, skills) {
     res.render('skills/index', {
       skills: skills,
-      error: error
+      error: error,
+      time : req.time
     })
   })
 }
@@ -16,7 +19,26 @@ function show(req, res) {
     res.render('skills/show', {
       skill: skill,
       error: error
+  
     })
+  })
+}
+
+function newskills(req, res) {
+  res.render('skills/new')
+}
+
+function create(req, res) {
+  console.log(req.body)
+  skillDb.create(req.body, function(error, skill) {
+		// Notice we are doing a redirect here!
+    res.redirect('/skills')
+  })
+}
+
+function deleteSkill(req, res) {
+  skillDb.findByIdAndDelete(req.params.id, function(error, skill) {
+    res.redirect('/skills')
   })
 }
 
@@ -24,5 +46,8 @@ function show(req, res) {
 
 export {
   index,
-  show
+  show,
+  newskills as new,
+  create,
+  deleteSkill as delete,
 }

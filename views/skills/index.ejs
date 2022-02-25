@@ -8,18 +8,26 @@
   <title>express-dev-skills</title>
 </head>
 <body>
-  <h1>Skills</h1>
+  <h1>Skills as of <%= time %></h1>
   <% if(error) { %>
     <h2><%= error %></h2>
   <% } %>
   <ul>
     <% skills.forEach(function(skill) { %>
       <li>
+        <form 
+        action="/skills/<%= skill._id %>?_method=DELETE"
+        class="delete-form"
+        method="POST"
+      >
+        <button type="submit">X</button>
+      </form>
         <a href="/skills/<%= skill._id %>"><%= skill.text %></a>
           - 
         <%= skill.done ? 'done' : 'not done' %>
       </li>
     <% }) %>
   </ul>
+  <a href="/skills/new">Add new skill</a>
 </body>
 </html>
